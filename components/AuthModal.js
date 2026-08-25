@@ -1,39 +1,40 @@
-"use client"
+"use client";
 
+import { createClient } from "@/utils/supabase/client";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
-import { Button } from "./ui/button"
-import { createClient } from "@/utils/supabase/client"
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
-export function AuthModal({isOpen,onClose}) {
+export default function AuthModal({ isOpen, onClose }) {
+  const supabase = createClient();
 
-  const supabase= createClient();
+  const handleGoogleLogin = async () => {
+    const { origin } = window.location;
 
-  const handleGoogleLogin = async() =>{
-    const {origin}=window.location;
     await supabase.auth.signInWithOAuth({
-        provider:"google",
-        options:{
-            redirectTo:`${origin}/auth/callback`,
-        }
+      provider: "google",
+      options: {
+        redirectTo: `${origin}/auth/callback`,
+      },
     });
-  }
-    
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="sm:max-w-sm">
-          <DialogHeader>
-            <DialogTitle>Sign in to Continue</DialogTitle>
-            <DialogDescription>
-              Track product prices and get alerts on price drops 
-            </DialogDescription>
-          </DialogHeader>
-          <div className="flex flex-col gap-4 py-4">
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle>Sign in to continue</DialogTitle>
+          <DialogDescription>
+            Track product prices and get alerts on price drops
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className="flex flex-col gap-4 py-4">
           <Button
             onClick={handleGoogleLogin}
             variant="outline"
@@ -61,7 +62,7 @@ export function AuthModal({isOpen,onClose}) {
             Continue with Google
           </Button>
         </div>
-        </DialogContent>
+      </DialogContent>
     </Dialog>
-  )
+  );
 }
