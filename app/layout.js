@@ -1,15 +1,20 @@
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
+
 export const metadata = {
-  title: "DealDrop",
-  description: "Made with ❤️ by Ritesh",
+  title: "Price Tracker - Never Miss a Price Drop",
+  description:
+    "Track product prices across e-commerce sites and get alerts on price drops",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html
-      lang="en"
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="en">
+      <body>
+        {children}
+
+        <Toaster richColors />
+      </body>
     </html>
   );
 }
